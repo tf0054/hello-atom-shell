@@ -7,10 +7,12 @@
 (def main-window (atom nil))
 
 (defn init-browser []
-	(reset! main-window (browser-window. (clj->js {:width 800 :height 600})))
-	(.loadUrl @main-window (str "file://" js/__dirname "/index.html"))
-	(.on @main-window "closed" #(reset! main-window nil)))
+  (reset! main-window (browser-window. (clj->js {:width 800 :height 600})))
+  (.loadUrl @main-window (str "file://" js/__dirname "/index.html"))
+  (.on @main-window "closed" #(reset! main-window nil)))
 
 (.start crash-reporter)
-(.on app "window-all-closed" #(when-not (= js/process.platform "darwin") (.quit app)))
-(.on app "ready" #(init-browser))
+(.on app "window-all-closed"
+     #(when-not (= js/process.platform "darwin") (.quit app)))
+(.on app "ready"
+     #(init-browser))
