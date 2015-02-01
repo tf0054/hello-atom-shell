@@ -4,6 +4,7 @@
 (def browser-window (js/require "browser-window"))
 (def crash-reporter (js/require "crash-reporter"))
 (def ipc (js/require "ipc"))
+(def clipboard (js/require "clipboard"))
 (def log (.-log js/console))
 
 (def counter (atom 0N))
@@ -17,8 +18,9 @@
 
 (defn loglog [x y]
   (log "Select file.")
-  ; event.sender.send('asynchronous-reply', filePath);
-  (.send (.. x -sender) "asynchronous-reply" (str "xxx" @counter "xxx"))
+  (let [strRes (str "xxx" @counter "xxx")]
+    (.send (.. x -sender) "asynchronous-reply" strRes)
+    (.writeText clipboard strRes))
   (swap! counter inc))
 
 (.on ipc "openFileDialog" loglog);

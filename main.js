@@ -8487,27 +8487,27 @@ cljs.core.not_empty = function(a) {
   return cljs.core.seq(a) ? a : null;
 };
 cljs.core.nil_iter = function nil_iter() {
-  "undefined" === typeof cljs.core.t7447 && (cljs.core.t7447 = function(b, c) {
+  "undefined" === typeof cljs.core.t7448 && (cljs.core.t7448 = function(b, c) {
     this.nil_iter = b;
-    this.meta7448 = c;
+    this.meta7449 = c;
     this.cljs$lang$protocol_mask$partition1$ = 0;
     this.cljs$lang$protocol_mask$partition0$ = 393216;
-  }, cljs.core.t7447.prototype.hasNext = function() {
+  }, cljs.core.t7448.prototype.hasNext = function() {
     return!1;
-  }, cljs.core.t7447.prototype.next = function() {
+  }, cljs.core.t7448.prototype.next = function() {
     return Error("No such element");
-  }, cljs.core.t7447.prototype.remove = function() {
+  }, cljs.core.t7448.prototype.remove = function() {
     return Error("Unsupported operation");
-  }, cljs.core.t7447.prototype.cljs$core$IMeta$_meta$arity$1 = function(b) {
-    return this.meta7448;
-  }, cljs.core.t7447.prototype.cljs$core$IWithMeta$_with_meta$arity$2 = function(b, c) {
-    return new cljs.core.t7447(this.nil_iter, c);
-  }, cljs.core.t7447.cljs$lang$type = !0, cljs.core.t7447.cljs$lang$ctorStr = "cljs.core/t7447", cljs.core.t7447.cljs$lang$ctorPrWriter = function(b, c, d) {
-    return cljs.core._write(c, "cljs.core/t7447");
-  }, cljs.core.__GT_t7447 = function(b, c) {
-    return new cljs.core.t7447(b, c);
+  }, cljs.core.t7448.prototype.cljs$core$IMeta$_meta$arity$1 = function(b) {
+    return this.meta7449;
+  }, cljs.core.t7448.prototype.cljs$core$IWithMeta$_with_meta$arity$2 = function(b, c) {
+    return new cljs.core.t7448(this.nil_iter, c);
+  }, cljs.core.t7448.cljs$lang$type = !0, cljs.core.t7448.cljs$lang$ctorStr = "cljs.core/t7448", cljs.core.t7448.cljs$lang$ctorPrWriter = function(b, c, d) {
+    return cljs.core._write(c, "cljs.core/t7448");
+  }, cljs.core.__GT_t7448 = function(b, c) {
+    return new cljs.core.t7448(b, c);
   });
-  return new cljs.core.t7447(nil_iter, new cljs.core.PersistentArrayMap(null, 5, [new cljs.core.Keyword(null, "end-column", "end-column", 1425389514), 54, new cljs.core.Keyword(null, "end-line", "end-line", 1837326455), 3063, new cljs.core.Keyword(null, "column", "column", 2078222095), 3, new cljs.core.Keyword(null, "line", "line", 212345235), 3059, new cljs.core.Keyword(null, "file", "file", -1269645878), "/Users/tf0054/work/tmp/hello-atom-shell/target/cljsbuild-compiler-0/cljs/core.cljs"], null));
+  return new cljs.core.t7448(nil_iter, new cljs.core.PersistentArrayMap(null, 5, [new cljs.core.Keyword(null, "end-column", "end-column", 1425389514), 54, new cljs.core.Keyword(null, "end-line", "end-line", 1837326455), 3063, new cljs.core.Keyword(null, "column", "column", 2078222095), 3, new cljs.core.Keyword(null, "line", "line", 212345235), 3059, new cljs.core.Keyword(null, "file", "file", -1269645878), "/Users/tf0054/work/hello-atom-shell/target/cljsbuild-compiler-0/cljs/core.cljs"], null));
 };
 cljs.core.StringIter = function(a, b) {
   this.s = a;
@@ -19397,6 +19397,7 @@ hello_world.core.app = require("app");
 hello_world.core.browser_window = require("browser-window");
 hello_world.core.crash_reporter = require("crash-reporter");
 hello_world.core.ipc = require("ipc");
+hello_world.core.clipboard = require("clipboard");
 hello_world.core.log = console.log;
 hello_world.core.counter = cljs.core.atom.call(null, 0);
 hello_world.core.main_window = cljs.core.atom.call(null, null);
@@ -19409,7 +19410,9 @@ hello_world.core.init_browser = function() {
 };
 hello_world.core.loglog = function(a, b) {
   hello_world.core.log.call(null, "Select file.");
-  a.sender.send("asynchronous-reply", [cljs.core.str("xxx"), cljs.core.str(cljs.core.deref.call(null, hello_world.core.counter)), cljs.core.str("xxx")].join(""));
+  var c = [cljs.core.str("xxx"), cljs.core.str(cljs.core.deref.call(null, hello_world.core.counter)), cljs.core.str("xxx")].join("");
+  a.sender.send("asynchronous-reply", c);
+  hello_world.core.clipboard.writeText(c);
   return cljs.core.swap_BANG_.call(null, hello_world.core.counter, cljs.core.inc);
 };
 hello_world.core.ipc.on("openFileDialog", hello_world.core.loglog);
