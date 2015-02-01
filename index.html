@@ -7,5 +7,26 @@
     <h1>Hello World!</h1>
     We are using node.js <script>document.write(process.version)</script>
     and atom-shell <script>document.write(process.versions['atom-shell'])</script>.
-  </body>
+
+      <hr/>
+ <button id="fileOpenBtn">Select file.</button>
+  <div id="out"></div>
+      <script>
+    var ipc = require('ipc');
+
+    ipc.on('asynchronous-reply', function(arg) {
+      // main.jsでファイルオープンダイアログでファイル選択後に呼ばれる。
+      // argにmain.jsでセットしたファイルパスが入っている。
+      console.log("fileName = " + arg);
+      var out = document.getElementById("out");
+      out.innerHTML = "fileName = " + arg;
+    });
+
+    var fileOpenBtn = document.getElementById("fileOpenBtn");
+    fileOpenBtn.addEventListener("click", function() {
+      // main.js側に同期イベントを送る。
+      ipc.sendSync('openFileDialog');
+    });
+  </script>
+    </body>
 </html>
