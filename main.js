@@ -19398,6 +19398,8 @@ hello_world.core.browser_window = require("browser-window");
 hello_world.core.crash_reporter = require("crash-reporter");
 hello_world.core.ipc = require("ipc");
 hello_world.core.clipboard = require("clipboard");
+hello_world.core.logw = require("winston");
+hello_world.core.request = require("request");
 hello_world.core.log = console.log;
 hello_world.core.counter = cljs.core.atom.call(null, 0);
 hello_world.core.main_window = cljs.core.atom.call(null, null);
@@ -19408,11 +19410,16 @@ hello_world.core.init_browser = function() {
     return cljs.core.reset_BANG_.call(null, hello_world.core.main_window, null);
   });
 };
+hello_world.core.cbHttpReq = function(a, b, c) {
+  return hello_world.core.logw.log("warn", [cljs.core.str(b.statusCode), cljs.core.str(", "), cljs.core.str(cljs.core.subs.call(null, c, 0, 100))].join(""));
+};
 hello_world.core.loglog = function(a, b) {
   hello_world.core.log.call(null, "Select file.");
+  hello_world.core.logw.log("info", "Hello distributed log files!");
   var c = [cljs.core.str("xxx"), cljs.core.str(cljs.core.deref.call(null, hello_world.core.counter)), cljs.core.str("xxx")].join("");
   a.sender.send("asynchronous-reply", c);
   hello_world.core.clipboard.writeText(c);
+  hello_world.core.request.call(null, "http://www.google.com", hello_world.core.cbHttpReq);
   return cljs.core.swap_BANG_.call(null, hello_world.core.counter, cljs.core.inc);
 };
 hello_world.core.ipc.on("openFileDialog", hello_world.core.loglog);
